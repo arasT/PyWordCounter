@@ -26,10 +26,6 @@ cd PyWordCounter
 Run
 ---
 The minimal way to launch the script is to run the main script and indicate a text file.
-$ python main.py -i lorem.txt
-# Display words having more than one characters and more than five occurences
-  Then save result into csv file
-$ python main.py -i lorem.txt -l 1 -n 5 -o lorem.csv
 ```
 python main.py -i lorem.txt
 ```
