@@ -1,5 +1,5 @@
-Usage: python main.py [OPTION] ... [FILE] ...
-Display the number of lines, words and bytes for a text FILE.
+Usage: python main.py [OPTION] ... [FILE]|[URL] ...
+Display the number of lines, words and bytes for a text FILE or a website by giving URL.
 A word is a sequence of non-special characters delimited by a space.
 
 The options below allow you to:
@@ -9,7 +9,8 @@ The options below allow you to:
  * specify the minimum number of occurrences of the words to be displayed
  * specify the file output (default screen)
   -h show help and exit
-  -i, --ifile path (relative or absolute) of the file to be analyzed
+  -i, --ifile path (relative or absolute) of the file to be analyzed (do not work with -u option)
+  -u, --url website url to analyse (do not work with -i option)
   -l, --lword minimum length of words to display
   -n, --nword minimum number of occurrences of words to display
   -o, --ofile path (relative or absolute) of the output file

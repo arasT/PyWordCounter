@@ -1,7 +1,9 @@
 import utils
 
 # Display result into screen
-def displayStat(statDict, nbWordsTotal):
+def displayStat(statDict):
+    totalOccur = sum(occur for word, occur in statDict["wordcount"])
+
     print "\n"
     print "{:<20} : {:>6}".format("Number of lines", statDict["nbLines"])
     print "{:<20} : {:>6}".format("Number of words", statDict["nbWords"])
@@ -13,13 +15,15 @@ def displayStat(statDict, nbWordsTotal):
     print "-" * 46
 
     for word, occur in statDict["wordcount"]:
-        print "{:<27} {:>7d} {:>10.2f}".format(word, occur, float(occur * 100)/nbWordsTotal)
+        print "{:<27} {:>7d} {:>10.2f}".format(word, occur, float(occur * 100)/totalOccur)
 
     print "\n"
 
 # Export stat to csv
-def exportStat(statDict, outputfile, nbWordsTotal):
+def exportStat(statDict, outputfile):
     import csv
+
+    totalOccur = sum(occur for word, occur in statDict["wordcount"])
 
     with open(outputfile, "w") as outputcsvfile:
         fieldnames = ["WORD", "TIMES", "SCORE%"]
@@ -27,7 +31,7 @@ def exportStat(statDict, outputfile, nbWordsTotal):
 
         writer.writeheader()
         for word, occur in statDict["wordcount"]:
-            writer.writerow({"WORD": word, "TIMES": occur, "SCORE%": float(occur * 100)/nbWordsTotal})
+            writer.writerow({"WORD": word, "TIMES": occur, "SCORE%": float(occur * 100)/totalOccur})
 
         statWriter = csv.writer(outputcsvfile, delimiter=',')
         statWriter.writerow(['', '', ''])

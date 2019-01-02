@@ -14,6 +14,41 @@ def readfile(filepath):
     with open(filepath) as fp:
         return fp.read()
 
+# Returns url text content
+def readurl(urlsite):
+    import urllib2
+    import re, sys
+
+    tagHtml = re.compile(r"<[^>]+>")
+    page = None
+
+    # Approprriate headers to avoid any 403 forbidden errors
+    hdr = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11",
+           "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+           "Accept-Charset": "ISO-8859-1,utf-8;q=0.7,*;q=0.3",
+           "Accept-Encoding": "none",
+           "Accept-Language": "en-US,en;q=0.8",
+           "Connection": "keep-alive"}
+
+    # Perform a HTTP request by passing URL and setting headers
+    req = urllib2.Request(urlsite, headers=hdr)
+    try:
+        page = urllib2.urlopen(req)
+    except:
+        print "Error: Cannot open url: ", urlsite, " !"
+        sys.exit(2)
+
+    # Read the response
+    content = page.read()
+
+    # Delete uneeded content
+    contentNoScript = re.sub(r"(\<script)\s*[^\>]*\>([^\<]*\<\/script>)", "", content)
+    contentNoScriptAndStyles = re.sub("r(\<style)\s*[^\>]*\>([^\<]*\<\/style>)", "", contentNoScript)
+    contentNoTags = tagHtml.sub("", contentNoScriptAndStyles)
+    contentUnescaped = re.sub(r"&(#?[xX]?(?:[0-9a-fA-F]+|\w{1,8}));", " ", contentNoTags)
+
+    return contentUnescaped
+
 # Returns number of char into a list of strigns
 def numberOfChar(stringList):
     return sum(len(s) for s in stringList)
@@ -24,12 +59,12 @@ def getargs(argv):
 
     argsDict = {}
     try:
-        opts, args = getopt.getopt(argv, "hi:l:n:o:", ["ifile=","lword=", "nword=", "ofile="])
+        opts, args = getopt.getopt(argv, "hi:u:l:n:o:", ["ifile=","url=", "lword=", "nword=", "ofile="])
     except getopt.GetoptError:
-        print "main.py -i <inputfile> -l <lengthword> -n <wordoccur> -o <outputfile>"
+        print "main.py -i|-u <inputfile>|<url> -l <lengthword> -n <wordoccur> -o <outputfile>"
         sys.exit(2)
     if len(opts) == 0:
-        print "main.py -i <inputfile> -l <lengthword> -n <wordoccur> -o <outputfile>"
+        print "main.py -i|-u <inputfile>|<url> -l <lengthword> -n <wordoccur> -o <outputfile>"
         sys.exit(2)
     for opt, arg in opts:
         if opt == "-h":
@@ -37,6 +72,8 @@ def getargs(argv):
             argsDict["help"] = "Display help"
         elif opt in ("-i", "--ifile"):
             argsDict["inputfile"] = arg
+        elif opt in ("-u", "--url"):
+            argsDict["url"] = arg
         elif opt in ("-l", "--lword"):
             try:
                 argsDict["lengthword"] = int(arg)
