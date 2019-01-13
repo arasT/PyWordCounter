@@ -1,10 +1,12 @@
-# Strips non alpha numeric char
 def stripNonAlphaNum(text):
+    """ Delete non alphanumerical character into a string text and return a list """
+
     import re
     return re.compile(r"\W+", re.UNICODE).split(text)
 
-# Returns file content
 def readfile(filepath):
+    """ Read a text file and return the content as string """
+
     import os, sys
 
     if not os.path.isfile(filepath):
@@ -14,8 +16,9 @@ def readfile(filepath):
     with open(filepath) as fp:
         return fp.read()
 
-# Returns url text content
 def readurl(urlsite):
+    """ Read a site url and return the content as string """
+
     import urllib2
     import re, sys
 
@@ -49,12 +52,22 @@ def readurl(urlsite):
 
     return contentUnescaped
 
-# Returns number of char into a list of strigns
 def numberOfChar(stringList):
+    """ Returns number of char into a list of strings and return a int """
+
     return sum(len(s) for s in stringList)
 
-# Returns arguments into dict
 def getargs(argv):
+    """
+        Returns given arguments into dict
+        args :
+            - -i <inputfile>|<url> (str) : input file's path
+            - -l <lengthword> (int) : minimum word length to display
+            - -n <wordoccur> (int) : minimum word times to display
+            - -o <outputfile>"(str) : output file's path
+        Return : dict
+    """
+
     import sys, getopt
 
     argsDict = {}

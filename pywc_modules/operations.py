@@ -1,7 +1,12 @@
 import utils
 
-# Display result into screen
 def displayStat(statDict):
+    """
+        Display formated result into screen
+        args :
+            - statDict (dict): data to display
+    """
+
     totalOccur = sum(occur for word, occur in statDict["wordcount"])
 
     print "\n"
@@ -19,8 +24,14 @@ def displayStat(statDict):
 
     print "\n"
 
-# Export stat to csv
 def exportStat(statDict, outputfile):
+    """
+        Export stat to csv
+        args :
+            - statDict (dict) : data to export
+            - outputfile (string) : output file's path
+    """
+
     import csv
 
     totalOccur = sum(occur for word, occur in statDict["wordcount"])
@@ -39,8 +50,15 @@ def exportStat(statDict, outputfile):
         statWriter.writerow(['Number of words', statDict["nbWords"]])
         statWriter.writerow(['Number of characters', statDict["nbChars"]])
 
-# Return filtered result according to arguments
 def filterStatDict(statDict, arguments):
+    """
+        Return filtered result according to arguments
+        args :
+            - statDict (dict) : data to filter
+            - arguments (dict) : contains word length and word occurence
+        Return : dict
+    """
+
     filteredStatDict = {
         "nbLines": statDict["nbLines"],
         "nbWords": statDict["nbWords"],
