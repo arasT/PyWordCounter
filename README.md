@@ -2,6 +2,7 @@ PyWordCounter
 =========
 
 Python script to display the number of lines, words and characters for a text file or a website. And a table about number of each word is displayed and can be saved into a csv file.
+Please check [PyWordCounterGUI](https://github.com/arasT/PyWordCounterGUI) if you want to use GUI interface instead of console script.
 
 Screenshots
 ---
@@ -12,7 +13,7 @@ Screenshots
 How to use
 ---
 
-This app is developped in [Python2.7](https://www.python.orAg/download/releases/2.7/).
+This app is developped in [Python2.7](https://www.python.org/download/releases/2.7/).
 
 Clone or Download this repository.
 ```
